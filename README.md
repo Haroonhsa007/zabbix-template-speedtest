@@ -65,3 +65,38 @@ Inspired by
 
 - https://git.cdp.li/polcape/zabbix/tree/master/zabbix-speedtest
 - https://github.com/sk3pp3r/speedtest2zabbix
+
+
+
+Haroon Saleem fix 
+
+```bash
+# If migrating from prior bintray install instructions, clean up first:
+sudo rm -f /etc/apt/sources.list.d/speedtest.list
+sudo apt-get update
+sudo apt-get remove -y speedtest
+sudo apt-get remove -y speedtest-cli
+
+# Install curl and the official Ookla Speedtest CLI
+sudo apt-get install -y curl
+curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+sudo apt-get install -y speedtest
+
+# Install the Zabbix speedtest integration script
+mkdir -p /etc/zabbix/scripts
+cd /etc/zabbix/scripts
+curl -LO https://raw.githubusercontent.com/sebastian13/zabbix-template-speedtest/master/scripts/speedtest-zabbix.sh
+chmod +x speedtest-zabbix.sh
+
+# Install the cron schedule
+curl -Lo /etc/cron.d/speedtest-zabbix https://raw.githubusercontent.com/sebastian13/zabbix-template-speedtest/master/speedtest-zabbix.cron
+service cron reload
+
+# Install JSON parser dependency
+sudo apt-get install -y jq
+
+Verify the speedtest script works:
+
+bash speedtest-zabbix.sh
+
+```
