@@ -95,7 +95,7 @@ service cron reload
 # Install JSON parser dependency
 sudo apt-get install -y jq
 
-Verify the speedtest script works:
+# Verify the speedtest script works:
 
 bash speedtest-zabbix.sh
 
